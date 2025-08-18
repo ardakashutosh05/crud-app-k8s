@@ -48,25 +48,23 @@ kubectl version --client
 
 # Download the latest version of eksctl
 echo "Downloading latest eksctl release..."
-# Replace amd64 with armv6, armv7 or arm64
- (Get-FileHash -Algorithm SHA256 .\eksctl_Windows_amd64.zip).Hash -eq ((Get-Content .\eksctl_checksums.txt) -match 'eksctl_Windows_amd64.zip' -split ' ')[0]
- ```
 
-#### Using Git Bash: 
-```sh
-# for ARM systems, set ARCH to: `arm64`, `armv6` or `armv7`
 ARCH=amd64
-PLATFORM=windows_$ARCH
+OS=linux
 
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.zip"
+curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${OS}_${ARCH}.tar.gz"
 
 # (Optional) Verify checksum
-curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
+curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep "${OS}_${ARCH}" | sha256sum --check
 
-unzip eksctl_$PLATFORM.zip -d $HOME/bin
+# Extract and install
+tar -xzf eksctl_${OS}_${ARCH}.tar.gz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
 
-rm eksctl_$PLATFORM.zip
+# Clean up
+rm eksctl_${OS}_${ARCH}.tar.gz
 
 # Confirm eksctl installation
 echo "eksctl installation completed ✅"
-eksctl version -- client
+eksctl version
+
