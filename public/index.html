@@ -1,153 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ QuickCRUD </title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #f7971e, #ffd200, #00c6ff, #0072ff);
-            background-size: 400% 400%;
-            animation: gradientShift 12s ease infinite;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        h1 {
-            margin-top: 20px;
-            text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
-            color: white;
-        }
-
-        .btn-container {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        button {
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
-            color: white;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        /* Button colors */
-        .btn-create { background: rgba(255,126,103,0.8); }
-        .btn-add    { background: rgba(40,199,111,0.8); }
-        .btn-get    { background: rgba(0,207,232,0.8); }
-        .btn-update { background: rgba(115,103,240,0.8); }
-        .btn-delete { background: rgba(234,84,85,0.8); }
-
-        button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
-            filter: brightness(1.1);
-        }
-
-        #result {
-            margin-top: 30px;
-            padding: 15px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.3);
-            width: 80%;
-            max-width: 600px;
-            min-height: 100px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-            overflow-x: auto;
-            white-space: pre-wrap;
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>✨ CRUD Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>✨ QuickCRUD</h1>
-    <div class="btn-container">
-        <button class="btn-create" onclick="createTable()">🛠 Create Table</button>
-        <button class="btn-add" onclick="addItem()">➕ Add Item</button>
-        <button class="btn-get" onclick="getItems()">📋 Get Items</button>
-        <button class="btn-update" onclick="updateItem()">✏ Update Item</button>
-        <button class="btn-delete" onclick="deleteItem()">🗑 Delete Item</button>
+
+<header>🛠️ CRUD Dashboard</header>
+
+<div class="container">
+    <div class="button-group">
+        <button class="btn glow-on-hover btn-create" onclick="createTable()">Create Table</button>
+        <button class="btn glow-on-hover btn-add" onclick="addItem()">Add Item</button>
+        <button class="btn glow-on-hover btn-get" onclick="getItems()">Show Items</button>
+        <button class="btn glow-on-hover btn-update" onclick="updateItem()">Update Item</button>
+        <button class="btn glow-on-hover btn-delete" onclick="deleteItem()">Delete Item</button>
     </div>
+    <div id="result">📋 Your results will appear here...</div>
+</div>
 
-    <div id="result">Results will appear here...</div>
-
-    <script>
-        function createTable() {
-            fetch('/createTable')
-                .then(res => res.text())
-                .then(data => document.getElementById('result').innerText = data);
-        }
-
-        function addItem() {
-            const name = prompt('Enter item name:');
-            if (!name) return;
-            fetch('/addItem', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
-            })
-                .then(res => res.text())
-                .then(data => document.getElementById('result').innerText = data);
-        }
-
-        function getItems() {
-            fetch('/getItems')
-                .then(res => res.json())
-                .then(data => {
-                    const resultDiv = document.getElementById('result');
-                    if (!data.length) {
-                        resultDiv.innerHTML = "No items found.";
-                        return;
-                    }
-                    resultDiv.innerHTML = data.map(item => 
-                        `ID: ${item.id} | Name: ${item.name}`
-                    ).join("\n");
-                });
-        }
-
-        function updateItem() {
-            const id = prompt('Enter item ID to update:');
-            const name = prompt('Enter new item name:');
-            if (!id || !name) return;
-            fetch(`/updateItem/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name })
-            })
-                .then(res => res.text())
-                .then(data => document.getElementById('result').innerText = data);
-        }
-
-        function deleteItem() {
-            const id = prompt('Enter item ID to delete:');
-            if (!id) return;
-            fetch(`/deleteItem/${id}`, { method: 'DELETE' })
-                .then(res => res.text())
-                .then(data => document.getElementById('result').innerText = data);
-        }
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
 
