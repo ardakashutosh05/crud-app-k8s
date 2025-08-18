@@ -1,10 +1,10 @@
 /* ----- General Layout ----- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: radial-gradient(circle at top left, #fff1e6, #ffe6f0);
+    background: radial-gradient(circle at top left, #e0f7fa, #e1bee7); /* light cyan to lavender */
     margin: 0;
     padding: 0;
-    color: #444;
+    color: #222;
 }
 
 /* ----- Header ----- */
@@ -12,7 +12,7 @@ header {
     text-align: center;
     padding: 25px;
     color: white;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    background: linear-gradient(135deg, #4a00e0, #8e2de2); /* purple gradient */
     font-size: 2.2rem;
     letter-spacing: 1px;
     box-shadow: 0px 6px 20px rgba(0,0,0,0.25);
@@ -24,7 +24,7 @@ header {
 .container {
     max-width: 850px;
     margin: 50px auto;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15);
     padding: 30px;
     border-radius: 20px;
     backdrop-filter: blur(12px);
@@ -47,7 +47,7 @@ header {
     border: none;
     outline: none;
     color: #fff;
-    background: #111;
+    background: #333; /* dark base for buttons */
     cursor: pointer;
     position: relative;
     z-index: 0;
@@ -60,8 +60,7 @@ header {
 .glow-on-hover:before {
     content: '';
     background: linear-gradient(45deg,
-        #ff0000, #ff7300, #fffb00, #48ff00,
-        #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        #6a11cb, #2575fc, #00c6ff, #6a11cb); /* cool glowing gradient */
     position: absolute;
     top: -2px;
     left: -2px;
@@ -83,7 +82,7 @@ header {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: #333;
     left: 0;
     top: 0;
     border-radius: 12px;
@@ -103,15 +102,14 @@ header {
 
 /* ----- Animated Refresh Button ----- */
 .btn-refresh {
-    background: #1e90ff;
+    background: #2575fc; /* bright blue */
 }
 
 .btn-refresh:hover {
     animation: bounce 0.6s ease infinite;
-    box-shadow: 0 0 15px rgba(30,144,255,0.7);
+    box-shadow: 0 0 15px rgba(37,117,252,0.7);
 }
 
-/* ----- Bounce Animation ----- */
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
@@ -125,20 +123,20 @@ table {
     border-radius: 12px;
     overflow: hidden;
     font-size: 0.95rem;
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.2);
     backdrop-filter: blur(6px);
     box-shadow: 0px 6px 20px rgba(0,0,0,0.15);
 }
 
 th {
-    background: linear-gradient(135deg, #f9d423, #ff4e50);
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* purple to blue */
     color: white;
     font-weight: 700;
     padding: 14px;
 }
 
-tr:nth-child(even) { background-color: rgba(255, 248, 220, 0.6); }
-tr:nth-child(odd)  { background-color: rgba(255, 239, 213, 0.4); }
+tr:nth-child(even) { background-color: rgba(198, 225, 255, 0.5); } /* light blue */
+tr:nth-child(odd)  { background-color: rgba(214, 203, 255, 0.4); } /* light lavender */
 
 td {
     padding: 14px;
@@ -151,5 +149,6 @@ td {
     font-size: 1rem;
     text-align: center;
     word-break: break-word;
+    color: #222;
 }
 
