@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: app
-        image: ardakashutosh05/crud-123:latest
+        image: softconsist/crud-123:latest
         ports:
         - containerPort: 3000
