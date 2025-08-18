@@ -125,54 +125,7 @@ A simple CRUD (Create, Read, Update, Delete) Node.js application with MySQL data
 - Add webhook support -> Go to Github Repo settings -> Webhooks -> http://<EC2-IP>:8080/github-webhook/ -> Content type * (appliation/json) -> save
 
 ---
-
-### 11. 🌐 Run & Access the App
-
-  ```bash
-  http://<EC2_PUBLIC_IP>:3000
-  ```
----
-
-## 📁 Project Structure
-
-  ```bash
-crud-app/
-├── app.js                  # Express app
-├── Dockerfile              # Docker container config
-├── Jenkinsfile             # Jenkins pipeline
-├── package.json
-├── public/                 # Static frontend
-├── scripts/
-│   └── docker-jenkins-install.sh
-└── .env                    # (not committed, local secrets)
-  ```
----
-
-## ✅ Technologies Used
-
-- Node.js + Express
-- MySQL (AWS RDS)
-- Docker
-- Jenkins
-- SonarCloud
-- GitHub
-
----
-
-## Website UI and Operation
-
-<p align="center">
-  <img src="assets/recording.gif" alt="Demo" width="700">
-</p>
-
----
-## 🚢CI/CD with Kubernetes (EKS)
-
-So far, our Jenkins pipeline deployed the app directly on EC2.
-Now, we’ll extend the pipeline to deploy on Kubernetes (EKS) with automatic image pull from Docker Hub.
-
----
-## 12.🧩 Jenkins Pipeline (4 Stages)
+## 11.🧩 Jenkins Pipeline (4 Stages)
 
 Our Jenkinsfile will contain 4 stages:
 - Build – Install dependencies & run tests
@@ -181,10 +134,11 @@ Our Jenkinsfile will contain 4 stages:
 - Deploy to Kubernetes – Apply Kubernetes manifests
 
 ---
-## 13.⚙️ Kubernetes Setup (via Script)
+## 12.⚙️ Kubernetes Setup (via Script)
+🚢CI/CD with Kubernetes (EKS)
+So far, our Jenkins pipeline deployed the app directly on EC2. Now, we’ll extend the pipeline to deploy on Kubernetes (EKS) with automatic image pull from Docker Hub.
 
 - We already have a script for Kubernetes setup:
-
 cd script/
 ```
 chmod 777 setup-k8s.sh
@@ -192,7 +146,7 @@ chmod 777 setup-k8s.sh
 ```
 ---
 
-## 14. ☁️ AWS CLI Configuration
+## 13. ☁️ AWS CLI Configuration
   - aws configure
   - AWS Access Key ID → <your-access-key>
   - AWS Secret Access Key → <your-secret-key>
@@ -201,7 +155,7 @@ chmod 777 setup-k8s.sh
 
 ---
 
-## 15. 🔑 IAM Role for EC2 → EKS Access
+## 14. 🔑 IAM Role for EC2 → EKS Access
 
   - Go to IAM → Roles → Create Role
   - Trusted Entity: AWS Service
@@ -217,7 +171,7 @@ chmod 777 setup-k8s.sh
 
 ---
 
-## 16. ☸️ Create EKS Cluster
+## 15. ☸️ Create EKS Cluster
 ```bash
 eksctl create cluster \
   - name cluster2 \
@@ -228,13 +182,13 @@ eksctl create cluster \
 
 ---
 
-## 17. 🔑 Update kubeconfig
+## 16. 🔑 Update kubeconfig
 ```bash
 aws eks --region ap-southeast-1 update-kubeconfig --name cluster2
 ```
 ---
 
-## 18. 📝 Create Kubernetes YAML Files
+## 17. 📝 Create Kubernetes YAML Files
 
 📌 k8s/app.yaml
 ```bash
@@ -285,7 +239,7 @@ kubectl get svc
 
 ---
 
-## 19. 🤖 Jenkinsfile with Kubernetes Deployment
+## 18. 🤖 Jenkinsfile with Kubernetes Deployment
 
 Extend your Jenkinsfile with Kubernetes deployment stage:
 ```bash
@@ -299,3 +253,35 @@ stage('Deploy to Kubernetes') {
 }
 ```
 ✅ Now, every time you push code → Jenkins builds → SonarCloud analysis → Docker image push → Kubernetes auto-deploys! 🚀
+
+## 📁 Project Structure
+
+  ```bash
+crud-app/
+├── app.js                  # Express app
+├── Dockerfile              # Docker container config
+├── Jenkinsfile             # Jenkins pipeline
+├── package.json
+├── public/                 # Static frontend
+├── scripts/
+│   └── docker-jenkins-install.sh
+└── .env                    # (not committed, local secrets)
+  ```
+---
+
+## ✅ Technologies Used
+
+- Node.js + Express
+- MySQL (AWS RDS)
+- Docker
+- Jenkins
+- SonarCloud
+- GitHub
+
+---
+
+## Website UI and Operation
+
+<p align="center">
+  <img src="assets/recording.gif" alt="Demo" width="700">
+</p>
