@@ -32,7 +32,7 @@ header {
     box-shadow: 0 8px 30px rgba(0,0,0,0.2);
 }
 
-/* ----- Buttons ----- */
+/* ----- Button Group ----- */
 .button-group {
     display: flex;
     flex-wrap: wrap;
@@ -40,6 +40,7 @@ header {
     justify-content: center;
 }
 
+/* ----- Glow Buttons ----- */
 .glow-on-hover {
     width: 180px;
     height: 50px;
@@ -75,9 +76,7 @@ header {
     transition: opacity .3s ease-in-out;
 }
 
-.glow-on-hover:hover:before {
-    opacity: 1;
-}
+.glow-on-hover:hover:before { opacity: 1; }
 
 .glow-on-hover:after {
     content: '';
@@ -102,7 +101,23 @@ header {
     100% { background-position: 0 0; }
 }
 
-/* ----- Table ----- */
+/* ----- Animated Refresh Button ----- */
+.btn-refresh {
+    background: #1e90ff;
+}
+
+.btn-refresh:hover {
+    animation: bounce 0.6s ease infinite;
+    box-shadow: 0 0 15px rgba(30,144,255,0.7);
+}
+
+/* ----- Bounce Animation ----- */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ----- Table Styling ----- */
 table {
     width: 100%;
     border-collapse: collapse;
