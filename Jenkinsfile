@@ -25,19 +25,32 @@ pipeline {
    }
 
 
-
-
+/*
        stage('Docker Build And Push') {
             steps {
                 script {
                     docker.withRegistry('', 'docker-cred') {
                         def buildNumber = env.BUILD_NUMBER ?: '1'
-                        def image = docker.build("ardakashutosh05/crud-123:latest")
+                        def image = docker.build("softconsist/crud-123:latest")
                         image.push()
                     }
                 }
             }
         }
+*/
+        
+ stage('Docker Build And Push') {
+    	    steps {
+                script {
+            	    docker.withRegistry('', 'docker-cred') {
+                	def version = "v${env.BUILD_NUMBER ?: '1'}"
+                	def image = docker.build("softconsist/crud-123:${version}")
+                	image.push()
+                	image.push("latest")  // optional: push 'latest' tag as well
+        	    }
+      	 	 }
+ 	   }
+	}
 
 
       /*  stage('Deploy To EC2') {
