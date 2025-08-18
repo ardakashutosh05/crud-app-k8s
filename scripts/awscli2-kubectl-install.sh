@@ -13,15 +13,21 @@ sudo apt install unzip -y
 
 # Download and install AWS CLI v2
 echo "Downloading AWS CLI v2..."
-curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip" -o "awscliv2.zip"
 
-echo "Unzipping AWS CLI installer..."
-unzip -q awscliv2.zip
+# Go to a safe directory
+cd ~/
 
-echo "Installing AWS CLI v2..."
-sudo ./aws/install
+# Remove old files if they exist
+rm -rf awscliv2.zip aws
 
-echo "AWS CLI v2 installation completed ✅"
+# Download the latest AWS CLI v2
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+# Unzip it
+unzip awscliv2.zip
+
+# Install or update
+sudo ./aws/install --update
 
 # Download the latest version of kubectl
 echo "Downloading latest kubectl release..."
@@ -45,26 +51,3 @@ mv ./kubectl ~/.local/bin/kubectl
 # Confirm kubectl installation
 echo "kubectl installation completed ✅"
 kubectl version --client
-
-# Download the latest version of eksctl
-echo "Downloading latest eksctl release..."
-
-ARCH=amd64
-OS=linux
-
-curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_${OS}_${ARCH}.tar.gz"
-
-# (Optional) Verify checksum
-curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep "${OS}_${ARCH}" | sha256sum --check
-
-# Extract and install
-tar -xzf eksctl_${OS}_${ARCH}.tar.gz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-
-# Clean up
-rm eksctl_${OS}_${ARCH}.tar.gz
-
-# Confirm eksctl installation
-echo "eksctl installation completed ✅"
-eksctl version
-
