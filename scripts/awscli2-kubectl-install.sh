@@ -51,3 +51,4 @@ mv ./kubectl ~/.local/bin/kubectl
 # Confirm kubectl installation
 echo "kubectl installation completed ✅"
 kubectl version --client
+
