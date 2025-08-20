@@ -254,6 +254,98 @@ stage('Deploy to Kubernetes') {
 ```
 ✅ Now, every time you push code → Jenkins builds → SonarCloud analysis → Docker image push → Kubernetes auto-deploys! 🚀
 
+----
+
+## 19. 📊 Install & Access Grafana + Prometheus
+    
+🔹 Install Helm & Prometheus Stack
+```bash
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm -y
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+kubectl create namespace monitoring
+helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring
+kubectl get pods -n monitoring
+```
+
+🔹 Access Grafana
+```bash
+kubectl port-forward svc/kube-prometheus-stack-grafana -n monitoring 3000:80
+```
+
+👉 Open browser: http://localhost:3000
+
+Get Grafana admin password:
+
+```bash
+kubectl get secret kube-prometheus-stack-grafana -n monitoring -o jsonpath="{.data.admin-password}
+```
+---
+## 20. 🔹 Expose Grafana & Prometheus via LoadBalancer
+
+Instead of using port-forward, you can expose them directly:
+
+```bash
+kubectl patch svc kube-prometheus-stack-prometheus -n monitoring -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl patch svc kube-prometheus-stack-grafana -n monitoring -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl get svc -n monitoring
+```
+
+👉 Check the EXTERNAL-IP column and open in browser:
+
+```Prometheus → http://<EXTERNAL-IP>:9090```
+
+```Grafana → http://<EXTERNAL-IP>:80```
+
+---
+
+## 21. 🔍 Monitor Kubernetes Pods & Workloads in Grafana
+
+Now that Grafana is running with Prometheus as the data source, you can monitor real-time cluster metrics.
+
+🔹 Access Grafana Dashboard
+
+ - Open Grafana → Dashboards → Kubernetes / Compute Resources / Cluster
+
+ You will see:
+
+  - CPU Utilization
+
+  - Memory Utilization
+
+  - Pods & Workloads per Namespace
+
+  - CPU/Memory Requests & Limits
+---
+
+🔹 Monitor Pods by Namespace
+
+ Grafana automatically groups metrics by namespace.
+    
+ For example:
+
+- default → User applications
+
+- kube-system → Kubernetes system pods
+
+- monitoring → Prometheus & Grafana pods
+
+- Your custom namespace (e.g., flipkart) → Application workloads
+---
+🔹 Example Dashboard View
+```
+<p align="center"> <img src="assets/grafana-dashboard.png" alt="Grafana Kubernetes Monitoring" width="800"> </p>
+```
+(Screenshot shows CPU, memory, and pods utilization across namespaces.)
+
+---
+
 ## 📁 Project Structure
 
   ```bash
