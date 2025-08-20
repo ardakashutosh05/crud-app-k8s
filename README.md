@@ -338,11 +338,11 @@ Now that Grafana is running with Prometheus as the data source, you can monitor 
 
 - Your custom namespace (e.g., flipkart) → Application workloads
 ---
-🔹 Example Dashboard View
-```
+## Example Dashboard View
+
 <img width="1896" height="965" alt="Screenshot 2025-08-19 165526" src="https://github.com/user-attachments/assets/48a605e0-67ea-4ee2-a815-bd6a836a3da0" />
 
-```
+
 (Screenshot shows CPU, memory, and pods utilization across namespaces.)
 
 ---
