@@ -340,7 +340,7 @@ Now that Grafana is running with Prometheus as the data source, you can monitor 
 ---
 🔹 Example Dashboard View
 ```
-<p align="center"> <img src="assets/grafana-dashboard.png" alt="Grafana Kubernetes Monitoring" width="800"> </p>
+<p align="center"> <img src="assets/Screenshot 2025-08-19 165526.png" alt="Grafana Kubernetes Monitoring" width="800"> </p>
 ```
 (Screenshot shows CPU, memory, and pods utilization across namespaces.)
 
